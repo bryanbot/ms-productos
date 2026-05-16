@@ -2,6 +2,7 @@ package com.examen.ms_productos.controller;
 
 import com.examen.ms_productos.dto.ProductoRequestDTO;
 import com.examen.ms_productos.dto.ProductoResponseDTO;
+import com.examen.ms_productos.entity.Producto;
 import com.examen.ms_productos.service.ProductoService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -32,5 +33,17 @@ public class ProductoController {
     @GetMapping("/{id}")
     public ResponseEntity<ProductoResponseDTO> obtenerPorId(@PathVariable Long id) {
         return ResponseEntity.ok(service.buscarPorId(id));
+    }
+    
+    @PutMapping("/{id}")
+    public ResponseEntity<Producto> actualizar(@PathVariable Long id, @RequestBody Producto productoDetalles) {
+        Producto actualizado = service.actualizar(id, productoDetalles);
+        return ResponseEntity.ok(actualizado);
+    }
+    
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
+        service.eliminar(id);
+        return ResponseEntity.noContent().build(); // Retorna 204
     }
 }

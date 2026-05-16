@@ -48,4 +48,21 @@ public class ProductoService {
         response.setFechaCreacion(p.getFechaCreacion());
         return response;
     }
+
+	public Producto actualizar(Long id, Producto productoDetalles) {
+		Producto producto = repository.findById(id)
+	            .orElseThrow(() -> new RuntimeException("Producto no encontrado con ID: " + id));
+	    
+	    producto.setNombre(productoDetalles.getNombre());
+	    producto.setDescripcion(productoDetalles.getDescripcion());
+	    producto.setPrecio(productoDetalles.getPrecio());
+	    producto.setStock(productoDetalles.getStock());
+	    
+	    return repository.save(producto);
+	}
+
+	public void eliminar(Long id) {
+		if (!repository.existsById(id)) throw new RuntimeException("No se puede eliminar: Producto inexistente");
+	    repository.deleteById(id);
+	}
 }
